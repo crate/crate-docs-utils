@@ -102,14 +102,14 @@ help:
 
 $(ACTIVATE):
 	$(PYTHON) -m venv $(ENV_DIR)
-	. $(ACTIVATE) && \
+	source $(ACTIVATE) && \
 	    $(PIP) install --upgrade pip
 
 $(RST2HTML) $(SPHINXBUILD) $(SPHINXAUTOBUILD): $(ACTIVATE)
-	. $(ACTIVATE) && \
+	source $(ACTIVATE) && \
 	    $(PIP) install -r $(LOCAL_DIR)/src/requirements.txt
 	@ # We change to `TOP_DIR` to mimic how Read the Docs does it
-	. $(ACTIVATE) && cd $(TOP_DIR) && \
+	source $(ACTIVATE) && cd $(TOP_DIR) && \
 	    $(PIP) install -r $(DOCS_DIR)/requirements.txt
 
 ifeq ($(UNAME),Linux)
@@ -145,7 +145,7 @@ tools: vale
 
 # Lint an RST file and dump the output
 %.rst.lint: %.rst
-	. $(ACTIVATE) && \
+	source $(ACTIVATE) && \
 	    $(LINT) '$<' '$@'
 
 .PHONY: lint
@@ -161,12 +161,12 @@ lint-watch: $(UTILS_DIR)
 # want to configure `linkcheck_ignore` in your `conf.py` file.
 .PHONY: html linkcheck
 html linkcheck: $(ACTIVATE) $(SPHINXBUILD)
-	. $(ACTIVATE) && \
+	source $(ACTIVATE) && \
 	    $(SPHINXBUILD) $(SPHINX_ARGS) $(SPHINX_OPTS) $(O)
 
 .PHONY: autobuild
 autobuild: $(ACTIVATE) $(SPHINXAUTOBUILD)
-	. $(ACTIVATE) && \
+	source $(ACTIVATE) && \
 	    $(SPHINXAUTOBUILD) $(SPHINX_ARGS) $(SPHINX_OPTS) $(AUTOBUILD_OPTS) $(O)
 
 .PHONY: dev
