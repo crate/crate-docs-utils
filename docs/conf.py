@@ -1,1 +1,1 @@
-from crate.theme.rtd.conf.standalone import *
+from crate.theme.rtd.conf.crate-docs-utils import *
